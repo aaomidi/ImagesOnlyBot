@@ -1,0 +1,11 @@
+{
+  "name": "PhotosOnlyBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Amir Omidi",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "telegraf": "^3.27.1"
+  }
+}
