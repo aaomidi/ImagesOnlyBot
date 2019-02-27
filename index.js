@@ -26,9 +26,16 @@ const getChatAdmins = async (chatId, telegram) => {
             return result.admins;
         }
 
-        result.admins = telegram.getChatAdministrators(chatId);
+        const admins = await telegram.getChatAdministrators(chatId);
+
+        result.admins = admins.map((chatMember) => {
+            return chatMember.user.id;
+        });
+        result.time = currentTime;
+
         return result.admins;
-    }catch (e) {
+    } catch (e) {
+        console.log(e);
         return [];
     }
 };
@@ -48,12 +55,13 @@ bot.use(async (ctx, next) => {
 
         const admins = await getChatAdmins(chat.id, ctx.telegram);
 
-        if(admins.contains(message.from.id)){
+        if (admins.includes(message.from.id)) {
             return;
         }
 
         ctx.telegram.deleteMessage(chat.id, message_id);
-    }catch (e) {
+    } catch (e) {
+        console.log(e);
         //ignore
     } finally {
         next();
